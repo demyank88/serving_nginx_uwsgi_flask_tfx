@@ -42,7 +42,10 @@ def serve_by_image(threshold, target_height, target_width, maxClsSize,target_fea
     json_response = requests.post('http://192.168.80.5:8501/v1/models/eye:predict', data=data, headers=headers)
     # json_response = requests.post('http://0.0.0.0:8501/v1/models/eye:predict', data=data, headers=headers)
     print("elapsed time : ", time.time() - start)
-    predictions = json.loads(json_response.text)['predictions']
+    try:
+        predictions = json.loads(json_response.text)['predictions']
+    except:
+        print(json.loads(json_response.text))
     predictions = np.array(predictions)
     # print(predictions)
 
