@@ -75,10 +75,11 @@ def predict():
 
 
     threshold = 0.2
-    target_height = 512
-    target_width = 512
+    target_height = 256
+    target_width = 256
     maxClsSize = 45
     target_features = [1,4,5,26,27,28,29,30,31,32,33]
+    print("target_height",target_height)
     result_dict, result_prob_dict,  segmentation_image = serve_by_image(threshold, target_height, target_width, maxClsSize,target_features,img)
 
     result=dict()
