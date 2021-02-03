@@ -92,8 +92,10 @@ def single_image_visual_result(image,  teeth_prediction, prediction, root_target
         # if np.max(label[...,k])> 0 and k> 0:
             # print("no",no, np.max(label[...,k]), len(np.where(label[...,k]>0)[0]))
             print("no", np.max(prediction[..., k]))
-            for i in range(H):
-                for j in range(W):
+            for i in range(H/2):
+                for j in range(W/2):
+                    i=i*2
+                    j=j*2
                     if prediction[i, j, k] > 0.1:
                         numpy_prediction[i, j, k] = 1
                         # numpy_target_prediction[i, j, k] = 1
@@ -165,7 +167,7 @@ def single_image_visual_result(image,  teeth_prediction, prediction, root_target
                 NofPixels = masks_color.shape[0] * masks_color.shape[1]
 
                 # NofValidPixels = tar_NofValidPixels
-
+                NofValidPixels=NofValidPixels*2
                 print("ratio valid pixels : ", NofValidPixels / NofPixels)
                 if NofValidPixels / NofPixels < 0.9:
                     if NofValidPixels / NofPixels > 0.001:
@@ -187,11 +189,11 @@ def single_image_visual_result(image,  teeth_prediction, prediction, root_target
 
                 # show_image = np.floor((1-alpha)*image) + np.floor((alpha*2/3)*masks_color) + np.floor((alpha/3)*lables_color)
                 # show_image = (1-alpha)*image + alpha*lables_color
-                show_image[:, :512, :] = image
-                show_image[:, 512:, :] = masks_color + lables_color.astype(np.uint8)
+                # show_image[:, :512, :] = image
+                # show_image[:, 512:, :] = masks_color + lables_color.astype(np.uint8)
                 # print("no", k, np.max(masks_color), len(np.where(masks_color > 0)[0]))
                 # show_image = Image.fromarray(np.uint8(show_image))
-                show_image = show_image.astype(np.uint8)
+                # show_image = show_image.astype(np.uint8)
                 # base_save_folder = '/home/projects/src/refineData/outputs_2nd/snapshot_tar/'
                 # if not os.path.isdir(base_save_folder):
                 #     os.makedirs(base_save_folder)
