@@ -92,29 +92,35 @@ def single_image_visual_result(image, prediction,target_features, threshold=0.5,
         # if np.max(label[...,k])> 0 and k> 0:
             # print("no",no, np.max(label[...,k]), len(np.where(label[...,k]>0)[0]))
 
-            for i in range(H):
-                for j in range(W):
-                    if prediction[i, j,k] > threshold:
-                        numpy_prediction[i, j, k] = 1
-                        NofValidPixels+=1
-                        if maxRatio<prediction[i, j,k]:
-                            maxRatio=prediction[i, j,k]
+            numpy_prediction=np.where(prediction[...,k] > threshold,1,0)
+            ratio_prediction=np.where(prediction[...,k] > threshold,prediction[...,k],0)
+            maxRatio = np.max(ratio_prediction)
 
-                    else:
-                        numpy_prediction[i, j, k] = 0
+            # for i in range(int(H/2)):
+            #     for j in range(int(W/2)):
+            #         i=i*2
+            #         j=j*2
+            #         if prediction[i, j,k] > threshold:
+            #             numpy_prediction[i, j, k] = 1
+            #             NofValidPixels+=1
+            #             if maxRatio<prediction[i, j,k]:
+            #                 maxRatio=prediction[i, j,k]
+            #
+            #         else:
+            #             numpy_prediction[i, j, k] = 0
 
 
-                    if numpy_prediction[i, j, k] >0.3 and k>0:
-                        masks_color[i, j] = np.array(colormap[c_i])
-                        # cls.append(cls_idx)
-                    else:
-                        masks_color[i, j] = np.array(colormap[0])
+                    # if numpy_prediction[i, j, k] >0.3 and k>0:
+                    #     masks_color[i, j] = np.array(colormap[c_i])
+                    #     # cls.append(cls_idx)
+                    # else:
+                    #     masks_color[i, j] = np.array(colormap[0])
             c_i+=1
-            masks_color = masks_color.astype(np.uint8)
+            # masks_color = masks_color.astype(np.uint8)
             show_image = np.zeros(shape=[512, 1024, 3])
             cls = set(cls)
-            NofPixels = masks_color.shape[0]*masks_color.shape[1]
-            NofValidPixels = NofValidPixels
+            NofPixels = H*W
+            NofValidPixels = NofValidPixels*2
             print("ratio valid pixels : ", NofValidPixels/NofPixels)
             if NofValidPixels/NofPixels<0.9:
                 if NofValidPixels/NofPixels>0.01:
