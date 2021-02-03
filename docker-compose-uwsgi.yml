@@ -23,7 +23,7 @@ services:
         expose:
             - 8501
         networks:
-            wire1:
+            wire:
               ipv4_address: 192.168.80.5
 
     flask:
@@ -52,7 +52,7 @@ services:
         expose:
             - 5000
         networks:
-            wire1:
+            wire:
               ipv4_address: 192.168.80.6
 #
     nginx:
@@ -69,12 +69,12 @@ services:
         expose:
             - 8080
         networks:
-            wire1:
+            wire:
                 ipv4_address: 192.168.80.7
 
 
 networks:
-  wire1:
+  wire:
       driver: bridge
       ipam:
           config:
